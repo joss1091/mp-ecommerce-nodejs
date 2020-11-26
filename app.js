@@ -18,12 +18,16 @@ app.use(express.static('assets'));
 app.use('/assets', express.static(__dirname + '/assets'));
 
 app.get('/', function (req, res) {
-    res.render('home');
+    res.render('home', {view: "search"});
 });
 
 app.get('/detail', function (req, res) {
     var img = req.query.img.replace("./","/")
-    var global = {}
+    var global = {
+        view: "item",
+        title: req.query.title,
+        price: req.query.price
+    }
     let preference = {
         items: [{
             id: "1234",
@@ -68,10 +72,11 @@ app.get('/detail', function (req, res) {
             console.log(response)
             // Este valor reemplazará el string "<%= global.id %>" en tu HTML
             global.id = response.body.id;
+            res.render('detail', global);
         }).catch(function (error) {
             console.log(error);
         });
-    res.render('detail', global);
+    
 });
 
 app.get("/process-payment",function(req,res){
