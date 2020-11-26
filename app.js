@@ -3,7 +3,8 @@ var exphbs  = require('express-handlebars');
 var port = process.env.PORT || 3000
 const mercadopago = require('mercadopago');
 mercadopago.configure({
-    access_token: 'APP_USR-1159009372558727-072921-8d0b9980c7494985a5abd19fbe921a3d-617633181'
+    access_token: 'APP_USR-1159009372558727-072921-8d0b9980c7494985a5abd19fbe921a3d-617633181',
+    integrator_id: "dev_24c65fb163bf11ea96500242ac130004"
 });
 
 
@@ -52,6 +53,7 @@ app.get('/detail', function (req, res) {
                 street_number: 1602
             }
         },
+        auto_return: "approved",
         back_urls: {
             success: baseUrl + "payment-sucess" ,
             pending: baseUrl + "payment-pending",
@@ -72,7 +74,7 @@ app.get('/detail', function (req, res) {
         .then(function (response) {
             console.log(response)
             // Este valor reemplazará el string "<%= global.id %>" en tu HTML
-            global.id = response.body.id;
+            global.payment_url = response.body.init_point;
             res.render('detail', global);
         }).catch(function (error) {
             console.log(error);
@@ -84,16 +86,16 @@ app.get("/process-payment",function(req,res){
     res.render("payment",req.query)
 })
 
-app.get("payment-success", function(req, res){
-    res.render("suceess", req.query)
+app.get("/payment-success", function(req, res){
+    res.render("success", req.query)
 })
 
-app.get("payment-pending", function (req, res) {
-    res.render("suceess", req.query)
+app.get("/payment-pending", function (req, res) {
+    res.render("pending", req.query)
 })
 
-app.get("payment-failure", function (req, res) {
-    res.render("suceess", req.query)
+app.get("/payment-failure", function (req, res) {
+    res.render("failure", req.query)
 })
 
 app.listen(port);
