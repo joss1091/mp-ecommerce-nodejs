@@ -9,8 +9,8 @@ mercadopago.configure({
 
 
 var app = express();
-var baseUrl = "https://joss1091-mp-commerce-nodejs.herokuapp.com/"
-//  var baseUrl = "http://localhost:3000/"
+// var baseUrl = "https://joss1091-mp-commerce-nodejs.herokuapp.com/"
+ var baseUrl = "http://localhost:3000/"
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 
@@ -59,6 +59,7 @@ app.get('/detail', function (req, res) {
             pending: baseUrl + "payment-pending",
             failure: baseUrl + "payment-failure"
         },
+        notification_url: baseUrl + "notification",
         payment_methods: {
             installments: 6,
             excluded_payment_methods: [
@@ -96,6 +97,10 @@ app.get("/payment-pending", function (req, res) {
 
 app.get("/payment-failure", function (req, res) {
     res.render("failure", req.query)
+})
+app.post("/notification", function(req, res){
+    console.log(req)
+    res.send("notification recibida")
 })
 
 app.listen(port);
