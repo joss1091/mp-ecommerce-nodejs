@@ -37,7 +37,7 @@ app.get('/detail', function (req, res) {
             unit_price: parseFloat(req.query.price),
             quantity: 1,
             description: "Dispositivo móvil de Tienda e-commerce",
-            pickture_url: baseUrl + img
+            picture_url: baseUrl + img
         }],
         external_reference: "joss1091@gmail.com",
         payer: {
