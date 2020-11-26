@@ -8,8 +8,8 @@ mercadopago.configure({
 
 
 var app = express();
-// var baseUrl = "https://joss1091-mp-commerce-nodejs.herokuapp.com/"
- var baseUrl = "http://localhost:3000/"
+var baseUrl = "https://joss1091-mp-commerce-nodejs.herokuapp.com/"
+//  var baseUrl = "http://localhost:3000/"
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 
@@ -26,7 +26,8 @@ app.get('/detail', function (req, res) {
     var global = {
         view: "item",
         title: req.query.title,
-        price: req.query.price
+        price: req.query.price,
+        img: req.query.img
     }
     let preference = {
         items: [{
