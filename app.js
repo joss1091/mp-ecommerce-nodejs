@@ -9,7 +9,7 @@ mercadopago.configure({
 
 
 var app = express();
-var baseUrl = "https://joss1091-mp-commerce-nodejs.herokuapp.com/"
+var baseUrl = "https://005c42926943.ngrok.io/"
 //  var baseUrl = "http://localhost:3000/"
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
@@ -41,7 +41,8 @@ app.get('/detail', function (req, res) {
         }],
         external_reference: "joss1091@gmail.com",
         payer: {
-            name: "Lalo Landa",
+            name: "Lalo",
+            surname: "Landa",
             email: "test_user_81131286@testuser.com",
             phone: {
                 area_code: "52",
@@ -55,7 +56,7 @@ app.get('/detail', function (req, res) {
         },
         auto_return: "approved",
         back_urls: {
-            success: baseUrl + "payment-sucess" ,
+            success: baseUrl + "payment-success" ,
             pending: baseUrl + "payment-pending",
             failure: baseUrl + "payment-failure"
         },
@@ -73,7 +74,6 @@ app.get('/detail', function (req, res) {
 
     mercadopago.preferences.create(preference)
         .then(function (response) {
-            console.log(response)
             // Este valor reemplazará el string "<%= global.id %>" en tu HTML
             global.payment_url = response.body.init_point;
             res.render('detail', global);
@@ -99,7 +99,13 @@ app.get("/payment-failure", function (req, res) {
     res.render("failure", req.query)
 })
 app.post("/notification", function(req, res){
-    console.log(req)
+    console.log("notification")
+    if (req.query.type == "payment") {
+        console.log(req.originalUrl)
+        console.log(req.query)
+        console.log(req)
+        
+    }
     res.send("notification recibida")
 })
 
