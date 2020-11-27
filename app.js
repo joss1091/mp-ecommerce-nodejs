@@ -9,7 +9,7 @@ mercadopago.configure({
 
 
 var app = express();
-var baseUrl = "https://005c42926943.ngrok.io/"
+var baseUrl = "https://joss1091-mp-commerce-nodejs.herokuapp.com/"
 //  var baseUrl = "http://localhost:3000/"
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
